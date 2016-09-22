@@ -1,9 +1,7 @@
-#!/usr/bin/env python
 import tensorflow as tf
 import math
 import os
 import numpy as np
-
 from const import *
 from reader import  read_and_decode
 
@@ -23,7 +21,7 @@ def main(_):
                 worker_device="/job:worker/task:%d" % FLAGS.task_index,
                 cluster=cluster)):
 	    filename_queue = tf.train.string_input_producer(
-	        tf.train.match_filenames_once("data/pb/x54.test.csv.tfrecords"),
+	        tf.train.match_filenames_once(train_pattern),
 	        num_epochs=epoch_number)
 	    label, features = read_and_decode(filename_queue)
 	    batch_labels, batch_features = tf.train.shuffle_batch(
@@ -34,7 +32,7 @@ def main(_):
 	        min_after_dequeue=min_after_dequeue)
 	    
 	    validate_filename_queue = tf.train.string_input_producer(
-	        tf.train.match_filenames_once("data/pb/x54.test.csv.tfrecords"),
+	        tf.train.match_filenames_once(test_pattern),
 	        num_epochs=epoch_number)
 	    
 	    validate_label, validate_features = read_and_decode(validate_filename_queue)
