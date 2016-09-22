@@ -31,15 +31,20 @@ logger.info("use the optimizer: %s" % FLAGS.optimizer)
 if FLAGS.optimizer == "sgd":
   optimizer = tf.train.GradientDescentOptimizer(learning_rate)
 elif FLAGS.optimizer == "adadelta":
-  optimizer = tf.train.AdadeltaOptimizer(learning_rate)
+  optimizer = tf.train.AdadeltaOptimizer(learning_rate, rho=0.95, epsilon=1e-08)
 elif FLAGS.optimizer == "adagrad":
-  optimizer = tf.train.AdagradOptimizer(learning_rate)
+  optimizer = tf.train.AdagradOptimizer(learning_rate, initial_accumulator_value=0.1)
 elif FLAGS.optimizer == "adam":
-  optimizer = tf.train.AdamOptimizer(learning_rate)
+  optimizer = tf.train.AdamOptimizer(learning_rate, beta1=0.9, beta2=0.999, epsilon=1e-08)
 elif FLAGS.optimizer == "ftrl":
-  optimizer = tf.train.FtrlOptimizer(learning_rate)
+  optimizer = tf.train.FtrlOptimizer(
+        learning_rate,
+        learning_rate_power=-0.5,
+        initial_accumulator_value=0.1,
+        l1_regularization_strength=0.0,
+        l2_regularization_strength=0.0)
 elif FLAGS.optimizer == "rmsprop":
-  optimizer = tf.train.RMSPropOptimizer(learning_rate)
+  optimizer = tf.train.RMSPropOptimizer(learning_rate, decay=0.9, momentum=0.0, epsilon=1e-10)
 else:
   logger.error("unknow optimizer: %s" % FLAGS.optimizer)
   exit()

@@ -4,7 +4,7 @@ import os,sys
 flags = tf.app.flags
 FLAGS = flags.FLAGS
 
-flags.DEFINE_float("learning_rate", 0.015, "learning rate")
+flags.DEFINE_float("learning_rate", 0.005, "learning rate")
 flags.DEFINE_integer("epoch_number", None, "epoch") ###### TODO(yuebin): bug here
 flags.DEFINE_integer("batch_size", 1024, "batch size")
 flags.DEFINE_integer("validate_batch_size", 1024, "")
