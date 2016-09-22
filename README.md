@@ -1,6 +1,5 @@
 # deepcake
 wide and deep model based on tensorflow
-一个三层DNN和LR
 ![](https://www.tensorflow.org/versions/r0.9/images/wide_n_deep.svg)
 
 ## 我要训练一个模型
