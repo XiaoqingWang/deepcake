@@ -1,5 +1,5 @@
 import tensorflow as tf
-from const import *
+from config import *
 
 def read_and_decode_all_float(filename_queue):
   reader = tf.TFRecordReader()

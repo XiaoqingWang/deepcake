@@ -1,5 +1,5 @@
 import tensorflow as tf
-from const import *
+from config import *
 
 def full_connect(inputs, weights_shape, biases_shape):
   with tf.device('/cpu:0'):

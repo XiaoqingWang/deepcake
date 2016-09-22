@@ -4,7 +4,7 @@ import os,sys
 import numpy as np
 import tensorflow as tf
 from reader import *
-from const import *
+from config import *
 from logger import *
 from models import *
 
