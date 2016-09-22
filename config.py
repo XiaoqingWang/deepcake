@@ -9,13 +9,11 @@ flags.DEFINE_integer("epoch_number", None, "epoch") ###### TODO(yuebin): bug her
 flags.DEFINE_integer("batch_size", 1024, "batch size")
 flags.DEFINE_integer("validate_batch_size", 1024, "")
 flags.DEFINE_integer("thread_number", 16, "thread num to read data")
-flags.DEFINE_integer("min_after_dequeue", 100,
-                     "indicates min_after_dequeue of shuffle queue")
+flags.DEFINE_integer("min_after_dequeue", 100,"")
 flags.DEFINE_string("checkpoint_dir", "./checkpoint/", "")
-flags.DEFINE_string("tensorboard_dir", "./tensorboard/",
-                    "indicates training output")
+flags.DEFINE_string("tensorboard_dir", "./tensorboard/", "")
 flags.DEFINE_string("model", "wide_n_deep", "wide, deep, wide_n_deep")
-flags.DEFINE_string("optimizer", "sgd", "optimizer to train")
+flags.DEFINE_string("optimizer", "ftrl", "optimizer to train")
 flags.DEFINE_integer("steps_to_validate", 100, "")
 flags.DEFINE_string("mode", "train",
                     "train_continue, train")
