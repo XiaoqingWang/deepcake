@@ -2,8 +2,43 @@ import tensorflow as tf
 import math
 import os
 import numpy as np
-from const import *
-from reader import  read_and_decode
+from config import *
+#from reader import  read_and_decode
+
+
+# Define parameters
+
+def read_and_decode(filename_queue):
+  reader = tf.TFRecordReader()
+  _, serialized_example = reader.read(filename_queue)
+  features = tf.parse_single_example(
+      serialized_example,
+      features={
+          "label": tf.FixedLenFeature([], tf.float32),
+          "categorical_features": tf.FixedLenFeature([CATEGORICAL_FEATURES_SIZE], tf.string),
+          "continuous_features": tf.FixedLenFeature([CONTINUOUS_FEATURES_SIZE], tf.float32),
+      })
+  label = features["label"]
+  continuous_features = features["continuous_features"]
+  categorical_features = tf.cast(tf.string_to_hash_bucket(features["categorical_features"], BUCKET_SIZE), tf.float32)
+  return label, tf.concat(0, [continuous_features, categorical_features])
+
+
+# Read serialized examples from filename queue
+def read_and_decode2(filename_queue):
+    reader = tf.TFRecordReader()
+    _, serialized_example = reader.read(filename_queue)
+    features = tf.parse_single_example(
+        serialized_example,
+        features={
+            "label": tf.FixedLenFeature([], tf.float32),
+            "features": tf.FixedLenFeature([FEATURE_SIZE], tf.float32),
+        })
+
+    label = features["label"]
+    features = features["features"]
+
+    return label, features
 
 def main(_):
     ps_hosts = FLAGS.ps_hosts.split(",")
@@ -21,7 +56,7 @@ def main(_):
                 worker_device="/job:worker/task:%d" % FLAGS.task_index,
                 cluster=cluster)):
 	    filename_queue = tf.train.string_input_producer(
-	        tf.train.match_filenames_once(train_pattern),
+	        tf.train.match_filenames_once("data/pb/x*.train.csv.tfrecords"),
 	        num_epochs=epoch_number)
 	    label, features = read_and_decode(filename_queue)
 	    batch_labels, batch_features = tf.train.shuffle_batch(
@@ -32,7 +67,7 @@ def main(_):
 	        min_after_dequeue=min_after_dequeue)
 	    
 	    validate_filename_queue = tf.train.string_input_producer(
-	        tf.train.match_filenames_once(test_pattern),
+	        tf.train.match_filenames_once("data/pb/x*.test.csv.tfrecords"),
 	        num_epochs=epoch_number)
 	    
 	    validate_label, validate_features = read_and_decode(validate_filename_queue)
