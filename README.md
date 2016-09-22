@@ -16,6 +16,7 @@ wide and deep model based on tensorflow
 
 2. 如果需要请修改config中的参数(优化函数啊,learning rate啊什么的)
       **请通过train_pattern， test_pattern指定自己的输入**
+      **step1之后，请在config里面修改CATEGORICAL_FEATURES_SIZE，CONTINUOUS_FEATURES_SIZE**
 3. ``` python cake.py ```
 4. 如果要查看模型效果，启动tensorboard
 
