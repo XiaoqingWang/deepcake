@@ -25,11 +25,8 @@ def deep_model(inputs):
   with tf.variable_scope("layer3"):
     layer = full_connect_relu(layer, [hidden2_units, hidden3_units],
                               [hidden3_units])
-  with tf.variable_scope("layer4"):
-    layer = full_connect_relu(layer, [hidden3_units, hidden4_units],
-                              [hidden4_units])
   with tf.variable_scope("output"):
-    layer = full_connect(layer, [hidden4_units, output_units], [output_units])
+    layer = full_connect(layer, [hidden3_units, output_units], [output_units])
   return layer
 
 def wide_model(inputs):

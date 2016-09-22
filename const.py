@@ -31,7 +31,7 @@ tf.app.flags.DEFINE_string("job_name", "", "'ps', 'worker'")
 tf.app.flags.DEFINE_integer("task_index", 0, "")
 
 CATEGORICAL_FEATURES_SIZE=5
-CONTINUOUS_FEATURES_SIZE=7+50
+CONTINUOUS_FEATURES_SIZE=7
 FEATURE_SIZE = CATEGORICAL_FEATURES_SIZE + CONTINUOUS_FEATURES_SIZE
 
 LABEL_SIZE = 2
@@ -58,7 +58,6 @@ input_units = FEATURE_SIZE
 hidden1_units = 512
 hidden2_units = 128
 hidden3_units = 64
-hidden4_units = 32
 output_units = LABEL_SIZE
 
 NUM_THREADS=32
