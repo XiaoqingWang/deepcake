@@ -6,7 +6,7 @@ wide and deep model based on tensorflow
 
 现在特征抽取还比较弱，没加embeding层。但是已经可以载入id类和连续值特征了。id类处理用了hash % bucket。其实也可以用tf.onehot，不过需要知道total-shape。
 
-## 我要训练一个模型
+## 我要训练一个二分类模型
 0. 目前特征支持continuous和categorical格式，categorical会用hash bucket进行sparse，暂时不支持feature的cross和embeding。
 1. 准备tfrecords格式数据
 
