@@ -5,11 +5,11 @@ wide and deep model based on tensorflow
 
 ## 我要训练一个模型
 
-1、准备tfrecords格式数据
-       为了支持多线程读取，请用csv2pb.py把自己的csv转tfrecords格式
-       **请提前把csv文件用split命令切块，然后提供的脚本多进程转换格式
+1. 准备tfrecords格式数据
+       ** 为了支持多线程读取，请用csv2pb.py把自己的csv转tfrecords格式
+       ** 请提前把csv文件用split命令切块，然后提供的脚本多进程转换格式
 
-2、python cake.py --train_pattern=data/pb/x*.train.csv.tfrecords —test_pattern=data/pb/x*.test.csv.tfrecords
+2. `python cake.py --train_pattern=data/pb/x*.train.csv.tfrecords —test_pattern=data/pb/x*.test.csv.tfrecords`
 
 BUG&TODO：
 0、目前请不要设置epoch_number，默认为None会循环整个dataset，后续会添加一个early stop策略
