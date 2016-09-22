@@ -2,6 +2,10 @@
 wide and deep model based on tensorflow
 ![](https://www.tensorflow.org/versions/r0.9/images/wide_n_deep.svg)
 
+官方提供的wide_n_deep demo有很多问题，比如不支持大量数据的batch加载，调用auc mertic报错，解析csv文件时不支持multi-type column。隐隐感觉tf.contrib是个大坑，所以网上找了一些资料，实现了一个弱化版的wide_n_deep模型，3层nn+lr。
+
+现在特征抽取还比较弱，没加embeding层。但是已经可以载入id类和连续值特征了。id类处理用了hash % bucket。其实也可以用tf.onehot，不过需要知道total-shape。
+
 ## 我要训练一个模型
 0. 目前特征支持continuous和categorical格式，categorical会用hash bucket进行sparse，暂时不支持feature的cross和embeding。
 1. 准备tfrecords格式数据
