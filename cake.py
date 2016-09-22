@@ -10,10 +10,20 @@ from models import *
 
 logger = init_log(debug = True)
 
+def model(inputs):
+  if FLAGS.model == "wide":
+    return wide_model(inputs)
+  elif FLAGS.model == "deep":
+    return deep_model(inputs)
+  elif FLAGS.model == "wide_n_deep":
+    return wide_and_deep_model(inputs)
+  else:
+    logger.error("unknown model")
+    exit()
+
 logits = model(batch_features)
 batch_labels = tf.to_int64(batch_labels)
-cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(logits,
-                                                               batch_labels)
+cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(logits, batch_labels)
 loss = tf.reduce_mean(cross_entropy, name='loss')
 
 logger.info("use the optimizer: %s" % FLAGS.optimizer)
