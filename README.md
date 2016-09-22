@@ -13,10 +13,11 @@ wide and deep model based on tensorflow
                       --train_pattern=data/pb/x*.train.csv.tfrecords 
                       --test_pattern=data/pb/x*.test.csv.tfrecords```
 
-BUG&TODO：
-0. 目前请不要设置epoch_number，默认为None会循环整个dataset，后续会添加一个early stop策略
-1. distribute mode目前worker启动有个bug
-2. gpu和cpu模式下效率不高，gpu指定多卡训练时只是用一张卡
+## BUG&TODO
+
+1. 目前请不要设置epoch_number，默认为None会循环整个dataset，后续会添加一个early stop策略
+2. distribute mode目前worker启动有个bug
+3. gpu和cpu模式下效率不高，gpu指定多卡训练时只是用一张卡
 
 官方tutorial
 https://www.tensorflow.org/versions/r0.9/tutorials/wide_and_deep/index.html
