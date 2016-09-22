@@ -14,7 +14,6 @@ def read_and_decode_all_float(filename_queue):
   features = features["features"]
   return label, features
 
-
 def read_and_decode(filename_queue):
   reader = tf.TFRecordReader()
   _, serialized_example = reader.read(filename_queue)
@@ -31,7 +30,7 @@ def read_and_decode(filename_queue):
   return label, tf.concat(0, [continuous_features, categorical_features])
 
 filename_queue = tf.train.string_input_producer(
-    tf.train.match_filenames_once("data/pb_join_zhubo2vec/x*.train.csv.tfrecords"),
+    tf.train.match_filenames_once(train_pattern),
     num_epochs=epoch_number)
 label, features = read_and_decode(filename_queue)
 batch_labels, batch_features = tf.train.shuffle_batch(
@@ -42,7 +41,7 @@ batch_labels, batch_features = tf.train.shuffle_batch(
     min_after_dequeue=min_after_dequeue)
 
 validate_filename_queue = tf.train.string_input_producer(
-    tf.train.match_filenames_once("data/pb_join_zhubo2vec/x*.test.csv.tfrecords"),
+    tf.train.match_filenames_once(test_pattern),
     num_epochs=epoch_number)
 
 validate_label, validate_features = read_and_decode(validate_filename_queue)

@@ -21,6 +21,9 @@ flags.DEFINE_integer("steps_to_validate", 100,
 flags.DEFINE_string("mode", "train_from_scratch",
                     "train, train_from_scratch")
 
+flags.DEFINE_string("train_pattern", "data/pb/x*.train.csv.tfrecords","")
+flags.DEFINE_string("test_pattern", "data/pb/x*.test.csv.tfrecords","")
+
 #distributed
 tf.app.flags.DEFINE_string("ps_hosts", "","")
 tf.app.flags.DEFINE_string("worker_hosts", "","")
@@ -34,6 +37,8 @@ FEATURE_SIZE = CATEGORICAL_FEATURES_SIZE + CONTINUOUS_FEATURES_SIZE
 LABEL_SIZE = 2
 BUCKET_SIZE = 2000000
 
+train_pattern = FLAGS.train_pattern
+test_pattern = FLAGS.test_pattern
 learning_rate = FLAGS.learning_rate
 epoch_number = FLAGS.epoch_number
 thread_number = FLAGS.thread_number
