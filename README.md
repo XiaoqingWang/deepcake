@@ -32,7 +32,7 @@ wide and deep model based on tensorflow
 ## 坑
 
 1. 目前请不要设置epoch_number，默认为None会循环整个dataset，后续会添加一个early stop策略。目前只能到达理想auc的时候kill掉任务，因为会保存checkpoint，所以不用担心。
-2. distribute mode目前worker启动有个bug
+2. (DONE) distribute mode目前worker启动有个bug
 3. gpu和cpu模式下效率不高，gpu指定多卡训练时只是用一张卡
 4. sgd会报loss nan 还没查
 
