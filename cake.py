@@ -21,6 +21,7 @@ def model(inputs):
     logger.error("unknown model")
     exit()
 
+#loss here
 logits = model(batch_features)
 batch_labels = tf.to_int64(batch_labels)
 cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(logits, batch_labels)
@@ -41,18 +42,19 @@ elif FLAGS.optimizer == "rmsprop":
   optimizer = tf.train.RMSPropOptimizer(learning_rate)
 else:
   logger.error("unknow optimizer: %s" % FLAGS.optimizer)
-  exit(1)
+  exit()
 
-with tf.device("/cpu:0"):
+with tf.device("/cpu:0"):  # better than gpu
   global_step = tf.Variable(0, name='global_step', trainable=False)
+
 train_op = optimizer.minimize(loss, global_step=global_step)
 
+# metric here
 tf.get_variable_scope().reuse_variables()
 accuracy_logits = model(validate_batch_features)
 validate_softmax = tf.nn.softmax(accuracy_logits)
 validate_batch_labels = tf.to_int64(validate_batch_labels)
-correct_prediction = tf.equal(
-    tf.argmax(validate_softmax, 1), validate_batch_labels)
+correct_prediction = tf.equal(tf.argmax(validate_softmax, 1), validate_batch_labels)
 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
 validate_batch_labels = tf.cast(validate_batch_labels, tf.int32)
@@ -76,6 +78,7 @@ init_op = tf.initialize_all_variables()
 tf.scalar_summary('loss', loss)
 tf.scalar_summary('accuracy', accuracy)
 tf.scalar_summary('auc', auc_op)
+
 saver = tf.train.Saver()
 keys_placeholder = tf.placeholder("float")
 keys = tf.identity(keys_placeholder)
@@ -95,8 +98,8 @@ with tf.Session(
   sess.run(init_op)
   sess.run(tf.initialize_local_variables())
 
-  if mode == "train" or mode == "train_from_scratch":
-    if mode != "train_from_scratch":
+  if mode == "train_continue" or mode == "train":
+    if mode != "train":
       ckpt = tf.train.get_checkpoint_state(checkpoint_dir)
       if ckpt and ckpt.model_checkpoint_path:
         logger.info("continue training from the model %s" % 

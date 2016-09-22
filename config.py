@@ -15,11 +15,10 @@ flags.DEFINE_string("checkpoint_dir", "./checkpoint/", "")
 flags.DEFINE_string("tensorboard_dir", "./tensorboard/",
                     "indicates training output")
 flags.DEFINE_string("model", "wide_n_deep", "wide, deep, wide_n_deep")
-flags.DEFINE_string("optimizer", "adagrad", "optimizer to train")
-flags.DEFINE_integer("steps_to_validate", 100,
-                     "Steps to validate and print loss")
-flags.DEFINE_string("mode", "train_from_scratch",
-                    "train, train_from_scratch")
+flags.DEFINE_string("optimizer", "sgd", "optimizer to train")
+flags.DEFINE_integer("steps_to_validate", 100, "")
+flags.DEFINE_string("mode", "train",
+                    "train_continue, train")
 
 flags.DEFINE_string("train_pattern", "data/pb/x*.train.csv.tfrecords","")
 flags.DEFINE_string("test_pattern", "data/pb/x*.test.csv.tfrecords","")
